@@ -1,0 +1,54 @@
+﻿@viewModel Cosmos.SqlApiDemo.ViewModels.ProductListViewModel, Cosmos.SqlApiDemo
+@masterPage Views/MasterPage.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+
+    <p>
+        <dot:RouteLink RouteName="ProductDetail" class="btn btn-default">
+            <span class="glyphicon glyphicon-plus"></span> New Product
+        </dot:RouteLink>
+    </p>
+
+    <dot:GridView DataSource="{value: Products}" class="table table-striped table-bordered">
+        <dot:GridViewTextColumn HeaderText="Name" ValueBinding="{value: Name}" />
+        <dot:GridViewTextColumn HeaderText="Qty / Unit" ValueBinding="{value: QuantityPerUnit}" />
+
+        <dot:GridViewTemplateColumn HeaderText="Categories">
+            <dot:Repeater DataSource="{value: Categories}">
+                <span class="badge">
+                    {{value: _this}}
+                </span>
+            </dot:Repeater>
+        </dot:GridViewTemplateColumn>
+
+        <dot:GridViewTemplateColumn HeaderText="Prices">
+            <dot:Repeater DataSource="{value: Prices}">
+                <span class="badge">
+                    <dot:Literal Text="{value: Amount}" FormatString="n2" />
+                    {{value: Currency}}
+                </span>
+            </dot:Repeater>
+        </dot:GridViewTemplateColumn>
+
+        <dot:GridViewTemplateColumn>
+            <dot:RouteLink RouteName="ProductDetail" Param-Id="{value: Id}" class="btn btn-default">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </dot:RouteLink>
+        </dot:GridViewTemplateColumn>
+
+        <dot:GridViewTemplateColumn>
+            <dot:LinkButton Click="{command: _parent.Remove(Id)}" class="btn btn-danger">
+                <PostBack.Handlers>
+                    <dot:ConfirmPostBackHandler Message="Do you really want to remove the product?" />
+                </PostBack.Handlers>
+
+                <span class="glyphicon glyphicon-remove"></span>
+            </dot:LinkButton>
+        </dot:GridViewTemplateColumn>
+    </dot:GridView>	
+
+    <p class="text-center" Visible="{value: ContinuationToken != null}">
+        <dot:LinkButton Click="{command: LoadMore()}" Text="Load more" />
+    </p>
+
+</dot:Content>

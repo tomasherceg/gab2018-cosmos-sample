@@ -1,0 +1,89 @@
+﻿@viewModel Cosmos.SqlApiDemo.ViewModels.ProductDetailViewModel, Cosmos.SqlApiDemo
+@masterPage Views/MasterPage.dotmaster
+
+<dot:Content ContentPlaceHolderID="MainContent">
+
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            {{value: IsNew ? "Create Product" : "Edit Product"}}
+        </div>
+
+        <div class="panel-body">
+
+            <div class="form" DataContext="{value: Product}">
+
+                <div class="form-group">
+                    <label class="control-label">Id</label>
+                    <div>
+                        <dot:TextBox Text="{value: Id}" Enabled="false" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Name</label>
+                    <div>
+                        <dot:TextBox Text="{value: Name}" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Quantity Per Unit</label>
+                    <div>
+                        <dot:TextBox Text="{value: QuantityPerUnit}" class="form-control" />
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="control-label">Categories</label>
+                    <div class="checkbox">
+                        <dot:Repeater DataSource="{value: _root.Categories}">
+                            <dot:CheckBox CheckedItems="{value: _parent.Categories}" CheckedValue="{value: _this}" Text="{value: _this}" />
+                        </dot:Repeater>
+                    </div>
+                </div>
+
+            </div>
+
+            <hr />
+
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th>Price</th>
+                        <th>Currency</th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <dot:Repeater DataSource="{value: Product.Prices}" WrapperTagName="tbody">
+                    <tr>
+                        <td>
+                            <dot:TextBox Text="{value: Amount}" FormatString="n2" ValueType="Number" class="form-control" />
+                        </td>
+                        <td>
+                            <dot:ComboBox DataSource="{value: _root.Currencies}" SelectedValue="{value: Currency}" class="form-control" />
+                        </td>
+                        <td>
+                            <dot:LinkButton Click="{command: _root.RemovePrice(_this)}" Validation.Enabled="false" class="btn btn-danger">
+                                <span class="glyphicon glyphicon-trash"></span>
+                            </dot:LinkButton>
+                        </td>
+                    </tr>
+                </dot:Repeater>
+            </table>
+
+            <dot:LinkButton Click="{command: _root.AddPrice()}" Validation.Enabled="false" class="btn btn-default">
+                <span class="glyphicon glyphicon-plus"></span> Add Price
+            </dot:LinkButton>
+
+        </div>
+
+        <div class="panel-footer">
+            <dot:LinkButton Click="{command: _root.Save()}" class="btn btn-primary">
+                <span class="glyphicon glyphicon-disk"></span> Save Changes
+            </dot:LinkButton>
+            <dot:RouteLink RouteName="ProductList" class="btn btn-defailt" Text="Cancel" />
+        </div>
+    </div>
+
+</dot:Content>
+

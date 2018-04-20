@@ -1,0 +1,20 @@
+﻿@viewModel Cosmos.SqlApiDemo.ViewModels.MasterPageViewModel, Cosmos.SqlApiDemo
+<!DOCTYPE html>
+
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8" />
+    <title>Cosmos.SqlApiDemo</title>
+</head>
+<body>
+    <div class="container">
+        <div class="jumbotron">
+            <h1>Product Catalog</h1>
+        </div>
+
+        <dot:ContentPlaceHolder ID="MainContent" />
+    </div>
+
+    <dot:RequiredResource Name="bootstrap" />
+</body>
+</html>
